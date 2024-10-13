@@ -23,7 +23,7 @@ Command: `readline generate`
 |`--wordsPerLine`|No|Max words per generated line|
 
 ```bash
-./readline generate --path <PATH_TO_SAMPLE_FILE> --lines 10000 --wordsPerLine 20
+./readline generate --path ./data/large_file.txt --lines 10000 --wordsPerLine 20
 ```
 
 ### Read random line
@@ -37,5 +37,5 @@ Command: `readline rand`
 |`--indexPath`|No|Path to the index file|
 
 ```bash
-./readline rand --verbose --path <PATH_TO_SAMPLE_FILE> --indexPath <PATH_TO_INDEX>
+./readline rand --verbose --path ./data/large_file.txt --indexPath ./index.idx
 ```
