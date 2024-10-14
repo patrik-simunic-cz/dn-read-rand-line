@@ -3,14 +3,18 @@ package reader
 import (
 	"fmt"
 	"io"
-	"math/rand"
 	"os"
 	"time"
 )
 
 const MAX_BYTES_PER_LINE = 1000
 
-func ReadRandomLine(indexPath string, path string, enableVerbose bool) (err error) {
+func ReadLine(
+	indexPath string,
+	path string,
+	outputLine int,
+	enableVerbose bool,
+) (err error) {
 	var (
 		fileInfo os.FileInfo
 		file     *os.File
@@ -59,7 +63,9 @@ func ReadRandomLine(indexPath string, path string, enableVerbose bool) (err erro
 		panic("File index not found")
 	}
 
-	outputLine := rand.Intn(fileIndex.LinesTotal-1) + 1
+	if outputLine > fileIndex.LinesTotal {
+		return fmt.Errorf("Cannot read line %d, the source file has only %d\n", outputLine, fileIndex.LinesTotal)
+	}
 
 	if enableVerbose {
 		fmt.Printf("Looking up line %d out of %d\n", outputLine, fileIndex.LinesTotal)

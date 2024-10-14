@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 
 	"github.com/urfave/cli/v2"
 
@@ -13,10 +14,28 @@ import (
 
 func main() {
 	app := &cli.App{
-		Name:  "help",
-		Usage: "Help",
-		Action: func(context *cli.Context) error {
-			return nil
+		Name:  "basicread",
+		Usage: "Read (basic)",
+		Action: func(context *cli.Context) (err error) {
+			var line int
+
+			args := context.Args()
+
+			path := args.Get(0)
+			if path == "" {
+				return fmt.Errorf("Missing path to the file to read")
+			}
+
+			lineRaw := args.Get(1)
+			if line, err = strconv.Atoi(lineRaw); err != nil {
+				return fmt.Errorf("Invalid line (\"%s\"): expected an integer", lineRaw)
+			}
+
+			if line < 1 {
+				return fmt.Errorf("Line to print must be greater than 0")
+			}
+
+			return reader.ReadLine("./index.idx", path, line, false)
 		},
 		Commands: []*cli.Command{{
 			Name:  "generate",
@@ -58,8 +77,8 @@ func main() {
 				return generator.Generate(path, lines, wordsPerLine)
 			},
 		}, {
-			Name:  "rand",
-			Usage: "Read random line",
+			Name:  "read",
+			Usage: "Read line",
 			Flags: []cli.Flag{
 				&cli.StringFlag{
 					Name:     "path",
@@ -71,6 +90,11 @@ func main() {
 					Name:  "indexPath",
 					Value: "./index.idx",
 					Usage: "Path to the index file",
+				},
+				&cli.IntFlag{
+					Name:     "line",
+					Usage:    "Line to print",
+					Required: true,
 				},
 				&cli.BoolFlag{
 					Name:  "verbose",
@@ -88,9 +112,14 @@ func main() {
 					return fmt.Errorf("Missing path to the file to read")
 				}
 
+				line := context.Int("line")
+				if line < 1 {
+					return fmt.Errorf("Line to print must be greater than 0")
+				}
+
 				enableVerbose := context.Bool("verbose")
 
-				return reader.ReadRandomLine(indexPath, path, enableVerbose)
+				return reader.ReadLine(indexPath, path, line, enableVerbose)
 			}},
 		},
 	}

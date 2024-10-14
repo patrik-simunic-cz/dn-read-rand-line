@@ -11,12 +11,14 @@
             "mode": "auto",
             "program": "${workspaceFolder}",
             "args": [
-                "rand",
+                "read",
                 "--verbose",
                 "--indexPath",
                 "/Users/patrik/sandbox/dnanexus/hw-read-lines/index.idx",
                 "--path",
-                "/Users/patrik/sandbox/dnanexus/hw-read-lines/data/small.txt"
+                "/Users/patrik/sandbox/dnanexus/hw-read-lines/data/small.txt",
+                "--line",
+                "/Users/patrik/sandbox/dnanexus/hw-read-lines/data/5555.txt"
             ]
         }
     ]
