@@ -31,11 +31,11 @@ func main() {
 				return fmt.Errorf("Invalid line (\"%s\"): expected an integer", lineRaw)
 			}
 
-			if line < 1 {
-				return fmt.Errorf("Line to print must be greater than 0")
+			if line < 0 {
+				return fmt.Errorf("Line index to print must be greater than or equal to 0")
 			}
 
-			return reader.ReadLine("./index.idx", path, line, false)
+			return reader.ReadLine("./index.idx", path, line+1, false)
 		},
 		Commands: []*cli.Command{{
 			Name:  "generate",

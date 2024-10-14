@@ -14,7 +14,11 @@ go build .
 
 ### Read line (basic)
 
-Command: `readline <TXT_FILE_PATH> <LINE>`
+Command: `readline <TXT_FILE_PATH> <LINE_INDEX>`
+
+> [!CAUTION]
+> **The `<LINE_INDEX>` argument uses 0-based indexing (ie. line index 3 = line 4).**<br>
+> _This is unlike the advanced usage command ([`readline read`](#read-line-advanced)), which expectes the actual line number._
 
 #### Example
 
@@ -40,7 +44,7 @@ Command: `readline generate`
 ./readline generate --path ./data/large_file.txt --lines 10000 --wordsPerLine 20
 ```
 
-### Read line
+### Read line (advanced)
 
 Command: `readline rand`
 
